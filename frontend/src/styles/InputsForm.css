@@ -1,0 +1,43 @@
+.input-con-lupa {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-con-lupa input {
+  width: 100%;
+  padding-right: 40px; /* espacio para el ícono */
+  padding: 8px;
+  height: 38px;
+  line-height: 1.2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.input-con-lupa i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+}
+
+/* Otros inputs/textareas (los que no tienen lupa) */
+input:not(.input-con-lupa input),
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
