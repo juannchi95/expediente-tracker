@@ -14,6 +14,8 @@
       <i class="fa fa-save"></i>
       Guardar
     </button>
+
+    <slot name="extra-button" />
   </div>
 </template>
 
@@ -23,7 +25,8 @@ import FormularioInputs from "./InputsForm.vue";
 import CommentarioForm from "./CommentForm.vue";
 import SelectUbicacion from "./LocationSelect.vue";
 import SelectEstado from "./StatusSelect.vue";
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification';
+import { authFetch } from '@/services/authFetch';
 
 const ci = ref("");
 const nombre = ref("");
@@ -45,7 +48,7 @@ async function buscarCliente() {
   if (!ci.value) return;
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/clients/ci/${ci.value}`);
+    const res = await authFetch(`${import.meta.env.VITE_API_URL}/clients/ci/${ci.value}`);
 
     if (!res.ok) throw new Error("Cliente no encontrado");
 
@@ -79,6 +82,8 @@ function resetForm() {
   ubicacionId.value = "";
   estadoId.value = "";
   comentario.value = "";
+  
+  emit('clienteEncontrado', null);
 }
 
 watch(ci, (nuevoValor) => {
@@ -111,7 +116,7 @@ async function guardarMovimiento() {
       comentario: comentario.value,
     };
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/movements`, {
+    const res = await authFetch(`${import.meta.env.VITE_API_URL}/movements`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -123,6 +128,7 @@ async function guardarMovimiento() {
 
       //Emitimos el evento para actualizar el historial
       emit('movimientoGuardado');
+
     } else {
       toast.error("Error inesperado al guardar");
       console.error(err);

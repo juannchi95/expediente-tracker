@@ -31,7 +31,7 @@ const props = defineProps({
     required: true
   },
   nroExpediente: {
-    type: Number,
+    type: String,
     required: true
   },
   comentario: {

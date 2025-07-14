@@ -29,12 +29,22 @@
   </table>
 
   <!-- Mensaje si no hay resultados -->
-  <p v-if="!movimientos.length" style="margin: 1.5rem 0; color: #777; font-style: italic;">
+  <!--   <p v-if="!movimientos.length" style="margin: 1.5rem 0; color: #777; font-style: italic;">
+    No hay movimientos aún para este cliente.
+  </p> -->
+  <p v-if="!movimientos.length && offset === 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
     No hay movimientos aún para este cliente.
   </p>
-  <div v-if="movimientos.length" class="paginacion">
+  <p v-if="!movimientos.length && offset > 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
+    Fin del historial.
+  </p>
+  <!--   <div v-if="movimientos.length" class="paginacion">
     <button @click="anteriorPagina" :disabled="offset === 0">Anterior</button>
     <button @click="siguientePagina" :disabled="movimientos.length < limit">Siguiente</button>
+  </div> -->
+  <div v-if="movimientos.length || offset > 0" class="paginacion">
+    <button @click="anteriorPagina" :disabled="offset === 0">Anterior</button>
+    <button @click="siguientePagina" :disabled="ultimaCantidad < limit">Siguiente</button>
   </div>
 </template>
 
@@ -57,6 +67,7 @@ const {
   siguientePagina,
   anteriorPagina,
   ci: ciRef,
+  ultimaCantidad,
 } = useMovimientos(props.ci);
 
 watch(() => props.ci, (nuevoCI) => {
@@ -77,6 +88,8 @@ h3 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+  padding: 0.5rem;
+  text-align: center;
 }
 
 select {

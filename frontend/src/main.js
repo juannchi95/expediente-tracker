@@ -1,10 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import Toast, { useToast } from 'vue-toastification'
+import router from './router'
+import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+
 const app = createApp(App)
+
+app.use(router)
 app.use(Toast, {
   timeout: 3000
 })
 
-createApp(App).mount('#app')
+app.mount('#app')

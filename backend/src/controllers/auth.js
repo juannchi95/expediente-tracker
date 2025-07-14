@@ -8,7 +8,7 @@ if (!process.env.JWT_SECRET) {
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWT_EXPIRES_IN = '24h'; // podés ajustar a 15m, 2h, etc.
+const JWT_EXPIRES_IN = '5m';
 
 export const registerUser = async (req, res) => {
   const { username, email, password, full_name } = req.body;
@@ -36,12 +36,12 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     const result = await pool.query(
-      'SELECT * FROM users WHERE username = $1 AND is_active = true',
-      [username]
+      'SELECT * FROM users WHERE email = $1 AND is_active = true',
+      [email]
     );
 
     if (result.rows.length === 0) {

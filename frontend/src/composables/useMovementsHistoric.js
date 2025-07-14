@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { authFetch } from '@/services/authFetch';
 
 export function useMovimientos(ciInicial = '') {
   const expedienteSeleccionado = ref('');
@@ -7,12 +8,13 @@ export function useMovimientos(ciInicial = '') {
   const limit = 5;
   const offset = ref(0);
   const ci = ref(ciInicial);
+  const ultimaCantidad = ref(0)
 
   const fetchExpedientes = async () => {
     if (!ci.value) return;
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/movements/expedientes?ci=${ci.value}`);
+      const res = await authFetch(`${import.meta.env.VITE_API_URL}/movements/expedientes?ci=${ci.value}`);
       if (!res.ok) throw new Error('Error al cargar expedientes');
 
       const raw = await res.json();
@@ -34,13 +36,15 @@ export function useMovimientos(ciInicial = '') {
         url += `&expediente=${expedienteSeleccionado.value}`;
       }
 
-      const res = await fetch(url);
+      const res = await authFetch(url);
       if (!res.ok) throw new Error('Error al obtener movimientos');
 
       const data = await res.json();
       movimientos.value = (data || []).filter(
         m => m && m.fecha && m.ubicacion && m.estado && m.nro_expediente
       );
+
+      ultimaCantidad.value = movimientos.value.length;
     } catch (error) {
       movimientos.value = [];
       console.error('Error al obtener movimientos:', error);
@@ -61,5 +65,6 @@ export function useMovimientos(ciInicial = '') {
     fetchMovimientos,
     siguientePagina,
     anteriorPagina,
+    ultimaCantidad,
   };
 }
