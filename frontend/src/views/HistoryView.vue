@@ -1,10 +1,14 @@
 <template>
   <div class="history-wrapper">
-    <h1>Historial de Movimientos</h1>
-    <MovementHistoric :ci="ci" />
-
+    <div class="history-header">
+      <h1>Movimientos</h1>
+    </div>
+    <div class="contenido">
+      <MovementHistoric :ci="ci" />
+    </div>
     <button class="volver-btn" @click="volver">
-      ← Volver
+      <i class="fa fa-arrow-left"></i>
+      Volver
     </button>
   </div>
 </template>
@@ -12,7 +16,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import MovementHistoric from '@/components/MovementHistoric.vue'
-import '@/styles/ExpedienteTracker.css' // si querés, podés separar estilo en uno propio
+import '@/styles/ExpedienteTracker.css'
 
 const route = useRoute()
 const router = useRouter()
@@ -25,19 +29,25 @@ const volver = () => {
 </script>
 
 <style scoped>
-.history-wrapper {
-  padding: 1rem;
-  max-width: 800px;
-  margin: auto;
-}
-
 .volver-btn {
   margin-top: 1rem;
   padding: 10px;
-  background-color: #ccc;
+  background-color: #34495e;
+  color: white;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem 1rem;
+}
+
+/* Para pantallas menores a 750px */
+@media (max-width: 750px) {
+  .volver-btn {
+    margin: 0 0 0.5rem 0.5rem;
+  }
 }
 </style>

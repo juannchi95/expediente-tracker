@@ -1,50 +1,40 @@
 <template>
-  <h3>Historial de Movimientos</h3>
-  <div v-if="expedientes.length > 1">
-    <label for="expedienteSelect">Filtrar por expediente:</label>
-    <select id="expedienteSelect" v-model="expedienteSeleccionado" @change="fetchMovimientos(0)">
-      <option value="">Todos</option>
-      <option v-for="exp in expedientes" :key="exp" :value="exp">
-        {{ exp }}
-      </option>
-    </select>
-  </div>
-
-
-  <table v-if="movimientos.length">
-    <thead>
-      <tr>
-        <th>Lote</th>
-        <th>Ubicación</th>
-        <th>Fecha y hora</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(mov, index) in movimientos" :key="index">
-        <td>{{ mov.nro_expediente }}</td>
-        <td>{{ mov.ubicacion }}</td>
-        <td>{{ mov.fecha }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Mensaje si no hay resultados -->
-  <!--   <p v-if="!movimientos.length" style="margin: 1.5rem 0; color: #777; font-style: italic;">
-    No hay movimientos aún para este cliente.
-  </p> -->
-  <p v-if="!movimientos.length && offset === 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
-    No hay movimientos aún para este cliente.
-  </p>
-  <p v-if="!movimientos.length && offset > 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
-    Fin del historial.
-  </p>
-  <!--   <div v-if="movimientos.length" class="paginacion">
-    <button @click="anteriorPagina" :disabled="offset === 0">Anterior</button>
-    <button @click="siguientePagina" :disabled="movimientos.length < limit">Siguiente</button>
-  </div> -->
-  <div v-if="movimientos.length || offset > 0" class="paginacion">
-    <button @click="anteriorPagina" :disabled="offset === 0">Anterior</button>
-    <button @click="siguientePagina" :disabled="ultimaCantidad < limit">Siguiente</button>
+  <div class="history-card">
+    <div v-if="expedientes.length > 1">
+      <label for="expedienteSelect">Filtrar por Lote:</label>
+      <select id="expedienteSelect" v-model="expedienteSeleccionado" @change="fetchMovimientos(0)">
+        <option value="">Todos</option>
+        <option v-for="exp in expedientes" :key="exp" :value="exp">
+          {{ exp }}
+        </option>
+      </select>
+    </div>
+    <table v-if="movimientos.length">
+      <thead>
+        <tr>
+          <th>Lote</th>
+          <th>Ubicación</th>
+          <th>Fecha y hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(mov, index) in movimientos" :key="index">
+          <td>{{ mov.nro_expediente }}</td>
+          <td>{{ mov.ubicacion }}</td>
+          <td>{{ mov.fecha }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p v-if="!movimientos.length && offset === 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
+      No hay movimientos aún para este cliente.
+    </p>
+    <p v-if="!movimientos.length && offset > 0" style="margin: 1.5rem 0; color: #777; font-style: italic;">
+      Fin del historial.
+    </p>
+    <div v-if="movimientos.length || offset > 0" class="paginacion">
+      <button @click="anteriorPagina" :disabled="offset === 0">Anterior</button>
+      <button @click="siguientePagina" :disabled="ultimaCantidad < limit">Siguiente</button>
+    </div>
   </div>
 </template>
 
@@ -84,16 +74,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  text-align: center;
-}
-
 select {
-  margin-bottom: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;

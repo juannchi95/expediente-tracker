@@ -94,3 +94,9 @@ h2 {
 .login-form button:hover {
   background-color: #0069d9;
 }
+
+@media (max-width: 750px) {
+  .login-container {
+    padding: 1rem;
+  }
+}

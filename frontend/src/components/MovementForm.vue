@@ -145,17 +145,18 @@ async function guardarMovimiento() {
 
 <style scoped>
 .form-card {
-  max-width: 700px;
   margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  flex: 1;
 }
 
 button {
   width: 100%;
   padding: 12px 0;
-  margin-top: 16px;
+  margin: 10px 0 10px 0;
   background-color: #34495e;
   color: white;
   font-weight: bold;
@@ -172,14 +173,5 @@ button {
 
 button:hover:not(:disabled) {
   background-color: #007bff;
-}
-
-.form-card {
-  width: 350px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
-  flex: 1;
 }
 </style>

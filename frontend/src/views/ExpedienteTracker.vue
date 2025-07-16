@@ -4,13 +4,9 @@
       <div class="form-header">
         <h1>Expediente Tracker</h1>
       </div>
-
       <div class="contenido">
         <div class="formulario">
-          <MovementForm
-            @clienteEncontrado="handleCliente"
-            @movimientoGuardado="refrescarHistorial"
-          >
+          <MovementForm @clienteEncontrado="handleCliente" @movimientoGuardado="refrescarHistorial">
             <template #extra-button>
               <div class="historial-toggle" v-if="cliente && cliente.doc_num">
                 <button @click="verHistorial">
