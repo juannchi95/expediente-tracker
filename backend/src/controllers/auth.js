@@ -8,7 +8,7 @@ if (!process.env.JWT_SECRET) {
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWT_EXPIRES_IN = '5m';
+const JWT_EXPIRES_IN = '15m';
 
 export const registerUser = async (req, res) => {
   const { username, email, password, full_name } = req.body;
