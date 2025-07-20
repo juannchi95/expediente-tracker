@@ -25,8 +25,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const token = auth.getToken()
+  
+  if (to.path === '/login' && token && !isTokenExpired(token)) {
+    return next('/')
+  }
+
   if (to.meta.requiresAuth) {
-    const token = auth.getToken()
     if (!token || isTokenExpired(token)) {
       auth.removeToken()
       return next('/login')

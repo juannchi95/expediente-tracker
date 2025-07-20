@@ -8,7 +8,7 @@ if (!process.env.JWT_SECRET) {
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWT_EXPIRES_IN = '15m';
+const JWT_EXPIRES_IN = '5m';
 
 export const registerUser = async (req, res) => {
   const { username, email, password, full_name } = req.body;
@@ -31,7 +31,7 @@ export const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al registrar usuario:', error);
-    res.status(500).json({ error: 'Error del servidor' });
+    res.status(500).json({ error: 'Error del servidor: ' + error.message });
   }
 };
 
@@ -76,6 +76,6 @@ export const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.error('Error en login:', error);
-    res.status(500).json({ error: 'Error del servidor' });
+    res.status(500).json({ error: 'Error del servidor: ' + error.message });
   }
 };

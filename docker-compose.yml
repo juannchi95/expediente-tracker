@@ -3,10 +3,12 @@ services:
     build: ./frontend
     container_name: vue_app
     ports:
-      - "5173:5173"
+      - "8080:80"  # Producción con NGINX
     depends_on:
       - backend
-
+    networks:
+      - app-network
+  
   backend:
     build: ./backend
     container_name: node_api
@@ -16,6 +18,8 @@ services:
       - .env
     depends_on:
       - db
+    networks:
+      - app-network
 
   db:
     image: postgres:15
@@ -26,6 +30,12 @@ services:
       - .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
 volumes:
   pg_data:
+
+networks:
+  app-network:
+    driver: bridge

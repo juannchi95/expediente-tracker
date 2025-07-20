@@ -13,7 +13,7 @@ export function useLocationSelect(props, emit) {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/locations`);
       ubicaciones.value = await res.json();
     } catch (err) {
-      console.error('❌ Error al cargar ubicaciones:', err);
+      console.error('Error al cargar ubicaciones:', err);
     }
   };
 

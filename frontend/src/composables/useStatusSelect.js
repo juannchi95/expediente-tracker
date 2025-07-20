@@ -19,7 +19,7 @@ export function useStatusSelect(props, emit) {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/status?id_ubicacion=${id}`);
         estados.value = await res.json();
       } catch (err) {
-        console.error('❌ Error al cargar estados:', err);
+        console.error('Error al cargar estados:', err);
       }
     },
     { immediate: true }
