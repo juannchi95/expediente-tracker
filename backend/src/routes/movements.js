@@ -4,7 +4,7 @@ import {
   createMovement,
   getMovements,
   getExpedientes
-} from '../controllers/movements.controller.js';
+} from '../controllers/movements.js';
 
 const router = express.Router();
 

@@ -8,6 +8,8 @@
 
     <SelectEstado :ubicacion-id="ubicacionId" v-model="estadoId" />
 
+    <SelectColor :color-id="colorId" v-model="colorId" />
+
     <CommentarioForm v-model:comentario="comentario" />
 
     <button :disabled="!puedeGuardar || isSubmitting" @click="guardarMovimiento">
@@ -27,6 +29,7 @@ import SelectUbicacion from "./LocationSelect.vue";
 import SelectEstado from "./StatusSelect.vue";
 import { useToast } from 'vue-toastification';
 import { authFetch } from '@/services/authFetch';
+import SelectColor from "./ColorSelect.vue";
 
 const ci = ref("");
 const nombre = ref("");
@@ -35,10 +38,13 @@ const nroExpediente = ref("");
 const ubicacionId = ref("");
 const estadoId = ref("");
 const comentario = ref("");
+const colorId = ref("");
+const userId = JSON.parse(localStorage.getItem('usuario') || '{}').id
 
 const toast = useToast();
 const isSubmitting = ref(false);
 const emit = defineEmits(['clienteEncontrado', 'movimientoGuardado']);
+
 
 const puedeGuardar = computed(() => {
   return !!clienteId.value && ci.value.trim() !== "";
@@ -82,6 +88,7 @@ function resetForm() {
   ubicacionId.value = "";
   estadoId.value = "";
   comentario.value = "";
+  colorId.value = "";
   
   emit('clienteEncontrado', null);
 }
@@ -114,6 +121,8 @@ async function guardarMovimiento() {
       id_ubicacion: ubicacionId.value,
       id_estado: estadoId.value,
       comentario: comentario.value,
+      id_color: colorId.value,
+      id_user: userId,
     };
 
     const res = await authFetch(`${import.meta.env.VITE_API_URL}/movements`, {

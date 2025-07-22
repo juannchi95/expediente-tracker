@@ -41,7 +41,12 @@ const handleLogin = async () => {
     if (!res.ok) throw new Error('Credenciales inválidas')
 
     const data = await res.json()
+
     auth.saveToken(data.token)
+
+    // Guardar usuario en localStorage
+    localStorage.setItem('usuario', JSON.stringify(data.user))
+    
     router.push('/')
   } catch (err) {
     toast.error('Credenciales inválidas')

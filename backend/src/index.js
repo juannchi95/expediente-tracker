@@ -6,6 +6,7 @@ import movementsRoutes from './routes/movements.js';
 import locationRoutes from './routes/file_location.js';
 import statusRoutes from './routes/file_status.js';
 import authRoutes from './routes/auth.js';
+import colorRoute from './routes/file_color.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use('/movements', movementsRoutes);
 app.use('/locations', locationRoutes);
 app.use('/status', statusRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/colors', colorRoute)
 
 // Fallback para rutas no encontradas
 app.use((req, res) => {

@@ -1,19 +1,19 @@
 import pool from '../db/connection.js';
 
 export const createMovement = async (req, res) => {
-  const { cliente_id, id_ubicacion, id_estado, nro_expediente, comentario } = req.body;
+  const { cliente_id, id_ubicacion, id_estado, nro_expediente, comentario, id_user, id_color } = req.body;
 
-  if (!id_ubicacion || !cliente_id || !id_estado || !nro_expediente) {
+  if (!id_ubicacion || !cliente_id || !id_estado || !nro_expediente || !id_color) {
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
 
   try {
     const query = `
-      INSERT INTO movements (id_ubicacion, cliente_id, id_estado, nro_expediente, comentario)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO movements (id_ubicacion, cliente_id, id_estado, nro_expediente, comentario, id_user, id_color)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-    const values = [id_ubicacion, cliente_id, id_estado, nro_expediente, comentario];
+    const values = [id_ubicacion, cliente_id, id_estado, nro_expediente, comentario, id_user, id_color];
     const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
